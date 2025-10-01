@@ -6,11 +6,18 @@ import {
   processTransform2d,
   RoundedRect,
 } from "@shopify/react-native-skia";
+import React from "react";
+import { Platform, Text } from "react-native";
 import { svg1 } from "./consts";
 import { parseSVG } from "./svgToPaths";
 
 export default function Index() {
-  const primitives = parseSVG(svg1);
+  if (Platform.OS !== "web") {
+    console.warn("Only WEB is currently supported");
+    return <Text>Only WEB is currently supported</Text>;
+  }
+
+  const primitives = Platform.OS === "web" ? parseSVG(svg1) : [];
 
   return (
     <Canvas style={{ flex: 1, backgroundColor: "white" }}>
